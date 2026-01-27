@@ -4,4 +4,6 @@
     <string name="password">Contraseña</string>
     <string name="btAceptar">Aceptar</string>
     <string name="login">Inicio de Sesión</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

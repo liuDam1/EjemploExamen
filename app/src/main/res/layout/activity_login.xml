@@ -12,13 +12,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="200dp"
         android:importantForAccessibility="yes"
         android:labelFor="@+id/txtNombre"
         android:text="@string/usuario"
         android:textSize="34sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/txtNombre"
@@ -67,21 +67,21 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="85dp"
         android:importantForAccessibility="yes"
-        android:onClick="guardar"
+        android:onClick="aceptar"
         android:text="@string/btAceptar"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/tvLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fgTitulo"
+        android:name="es.etg.dam.pmdm.ejemploexamen.TituloFragment"
+        android:layout_width="404dp"
+        android:layout_height="55dp"
         android:layout_marginTop="50dp"
-        android:text="@string/login"
-        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

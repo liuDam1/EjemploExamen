@@ -7,13 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/tvNombre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fgTitulo"
+        android:name="es.etg.dam.pmdm.ejemploexamen.TituloFragment"
+        android:layout_width="406dp"
+        android:layout_height="45dp"
         android:layout_marginTop="50dp"
-        android:text="TextView"
-        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

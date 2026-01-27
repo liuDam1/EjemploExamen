@@ -1,11 +1,8 @@
 package es.etg.dam.pmdm.ejemploexamen
 
 import android.os.Bundle
-import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.commit
 import es.etg.dam.pmdm.ejemploexamen.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -14,16 +11,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        mostrarNombre()
-    }
-
-    private fun mostrarNombre(){
-        val nombreTxt = binding.tvNombre
-        val extras = intent.extras
-
-        if (extras != null) {
-            val nombre = extras.getString(LoginActivity.Constantes.NOMBRE, "")
-            nombreTxt.text = nombre
+        if (savedInstanceState == null) {
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add(binding.fgTitulo.id, TituloFragment())
+            }
         }
     }
 }
