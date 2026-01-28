@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
     private fun consultarPokemon() {
         CoroutineScope(Dispatchers.IO).launch {
             // Consulto los Pokémon
-            val call = getRetrofit().create(PokemonApiService::class.java).getPokemon(URL)
+            val call = getRetrofit().create(PokemonApiService::class.java).getPokemon(url = URL)
             // A la respuesta le pido que me de el PokemonResponse
             val pokemonResponse = call.body()
 
@@ -74,7 +74,6 @@ class MainActivity : AppCompatActivity() {
                         adapter.updateData(pokemonList)
                     }
                 } else {
-                    // Da error la ejecución del servicio
                     Toast.makeText(this@MainActivity, MSG_ERROR, Toast.LENGTH_LONG).show()
                 }
             }
