@@ -1,10 +1,11 @@
-package es.etg.dam.pmdm.ejemploexamen
+package es.etg.dam.pmdm.ejemploexamen.ui
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
+import es.etg.dam.pmdm.ejemploexamen.ui.viewModel.TituloFragment
 import es.etg.dam.pmdm.ejemploexamen.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {

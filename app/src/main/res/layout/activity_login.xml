@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="LoginActivity">
+    tools:context=".ui.LoginActivity">
 
     <TextView
         android:id="@+id/tvUsuario"
@@ -76,7 +76,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fgTitulo"
-        android:name="es.etg.dam.pmdm.ejemploexamen.TituloFragment"
+        android:name="es.etg.dam.pmdm.ejemploexamen.ui.viewModel.TituloFragment"
         android:layout_width="404dp"
         android:layout_height="55dp"
         android:layout_marginTop="50dp"
