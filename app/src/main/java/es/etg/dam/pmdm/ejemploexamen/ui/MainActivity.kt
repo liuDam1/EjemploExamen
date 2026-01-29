@@ -6,8 +6,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Room
 import es.etg.dam.pmdm.ejemploexamen.ui.viewModel.TituloFragment
 import es.etg.dam.pmdm.ejemploexamen.databinding.ActivityMainBinding
+import es.etg.dam.pmdm.ejemploexamen.room.PokemonDataBase
+import es.etg.dam.pmdm.ejemploexamen.room.PokemonEntity
 import es.etg.dam.pmdm.ejemploexamen.ui.viewModel.DataAdapter
 import es.etg.dam.pmdm.ejemploexamen.ui.viewModel.ItemViewModel
 import es.etg.dam.pmdm.ejemploexamen.service.PokemonApiService
@@ -22,7 +25,9 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val BASE_URL: String = "https://pokeapi.co/api/v2/"
         const val URL: String = "pokemon?limit=100"
-        const val MSG_ERROR: String = "Error al consultar el servicio"
+
+        const val DATABASE_NAME = "pokemon"
+        lateinit var database: PokemonDataBase
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,9 +41,13 @@ class MainActivity : AppCompatActivity() {
                 add(binding.fgTitulo.id, TituloFragment())
             }
         }
+
+        MainActivity.database =  Room.databaseBuilder(this,
+            PokemonDataBase::class.java,
+            DATABASE_NAME).build()
     }
 
-    fun mostrar(View : View){
+    fun mostrar(view : View){
         // Inicializamos el adapter con una lista vacía
         val data = ArrayList<ItemViewModel>()
         adapter = DataAdapter(data)
@@ -72,9 +81,12 @@ class MainActivity : AppCompatActivity() {
 
                         // Actualizamos el adapter con los datos obtenidos
                         adapter.updateData(pokemonList)
+
+                        // Guardar pokemon al base de datos
+                        guardarBD(pokemonList)
                     }
                 } else {
-                    Toast.makeText(this@MainActivity, MSG_ERROR, Toast.LENGTH_LONG).show()
+                    cargarBD()
                 }
             }
         }
@@ -85,5 +97,36 @@ class MainActivity : AppCompatActivity() {
             .baseUrl(BASE_URL)
             .addConverterFactory(retrofit2.converter.gson.GsonConverterFactory.create())
             .build()
+    }
+
+    private fun guardarBD(pokemonList: List<ItemViewModel>){
+        CoroutineScope(Dispatchers.IO).launch {
+            val pokemonDao = database.pokemonDao()
+
+            // Convertir ItemViewModel a PokemonEntity
+            pokemonList.forEach { item ->
+                val pokemonEntity = PokemonEntity(
+                    id = 0, // 0 para auto-generar
+                    name = item.nombre,
+                    url = item.url
+                )
+                pokemonDao.insert(pokemonEntity)
+            }
+        }
+    }
+
+    private fun cargarBD(){
+        CoroutineScope(Dispatchers.IO).launch {
+            val pokemonDao = database.pokemonDao()
+            val pokemons = pokemonDao.getAll()
+
+            runOnUiThread {
+                // Convertir a ItemViewModel y actualizar el adapter
+                val itemList = pokemons.map {
+                    ItemViewModel(it.name, it.url)
+                }
+                adapter.updateData(itemList)
+            }
+        }
     }
 }
